@@ -4,8 +4,13 @@ using System.Linq;
 
 namespace SortingCore
 {
-    public class BubbleSort
+    public class BubbleSort : ISortable
     {
+        public override string ToString()
+        {
+            return "BubbleSort";
+        }
+
         public List<int> SortAscending(List<int> list)
         {            
             if (list == null || !list.Any())

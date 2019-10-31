@@ -1,45 +1,67 @@
 ﻿using SortingCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace SortAlgorithms
 {
     class Program
     {
+        static string path = Directory.GetCurrentDirectory()+"/statistics.txt";
         static void Main(string[] args)
         {
             //TODO:
             //la copia del array no hacerla aca, aunque revisar como se comporta con gran cantidad de datos: uso de memoria
             //implementar un Comparable en el core
-            //Una fabrica para distribuir los sorts
-            //Incrementar la cantida de datos.
+            //No hacerlo secuencial, hacer un randmon, pero se podra de numeros unicos?
 
+            SortFactory factory = new SortFactory();
+            ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
+            List<int> iterations = new List<int>();
+            iterations.Add(10000);
+            //iterations.Add(100000);
+            //iterations.Add(1000000);
+            //iterations.Add(10000000);
+            FileService fileService = new FileService();
+            fileService.Delete(path);
+            foreach (int iteration in iterations)
+            {
+                Sort(sortable,iteration, fileService);
+            }
+            
 
-            List<int> list = new List<int>();
-            list.Add(10);
-            list.Add(50);
-            list.Add(5);
-            list.Add(2);
-            list.Add(1);
+            
+            //Console.WriteLine("Original list:");
+            //Print(list);
 
-            List<int> originalList = new List<int>(list);
+            //Console.WriteLine("Ordered Asc list:");
+            //Print(orderedList);
 
-            BubbleSort sort = new BubbleSort();
-            List<int> orderedList = sort.SortAscending(originalList);
-
-            List<int> original2List = new List<int>(list);
-            List<int> orderedDescList = sort.SortDescending(original2List);
-
-            Console.WriteLine("Original list:");
-            Print(list);
-
-            Console.WriteLine("Ordered list:");
-            Print(orderedList);
-
-            Console.WriteLine("Ordered list:");
-            Print(orderedDescList);
+            //Console.WriteLine("Ordered Desc list:");
+            //Print(orderedDescList);
 
             Console.ReadKey();
+        }
+
+        private static List<int> GetListToOrder(int amount)
+        {
+            List<int> list = new List<int>();
+            for(int i = 0; i <= amount; i++)
+            {
+                list.Add(i);
+            }
+
+            return list;
+        }
+
+        private static List<int> OrderAsc(ISortable sortable, List<int> list)
+        {
+            return sortable.SortAscending(list);
+        }
+
+        private static List<int> OrderDesc(ISortable sortable, List<int> list)
+        {
+            return sortable.SortDescending(list);
         }
 
         private static void Print(List<int> list)
@@ -48,6 +70,35 @@ namespace SortAlgorithms
             {
                 Console.WriteLine(value);
             }
+        }
+
+        private static void Sort(ISortable sortable, int amount, FileService fileService)
+        {
+            fileService.Save(path, sortable.ToString());
+
+            Console.WriteLine("---- Analyze "+amount+" ----");
+            TimeWatch timer = new TimeWatch();
+            timer.Start();
+            List<int> list = GetListToOrder(amount);
+            Console.WriteLine("Time Loading List: " + timer.GetEllapsedMilliSeconds());
+
+            timer.Restart();
+            List<int> listOrderAsc = new List<int>(list);
+            List<int> listOrderDesc = new List<int>(list);
+            Console.WriteLine("Time Loading List to Order Asc or Desc:" + timer.GetEllapsedMilliSeconds());
+
+            timer.Restart();
+            List<int> orderedList = OrderAsc(sortable, listOrderAsc);
+            long timeAsc = timer.GetEllapsedMilliSeconds();
+            Console.WriteLine("Time Ordering Asc:" + timer.GetEllapsedMilliSeconds());
+            
+            timer.Restart();
+            List<int> orderedDescList = OrderDesc(sortable, listOrderDesc);
+            long timeDesc = timer.GetEllapsedMilliSeconds();
+            Console.WriteLine("Time Ordering Desc:" + timer.GetEllapsedMilliSeconds());
+
+            fileService.Save(path, Environment.NewLine + $"Amount:{amount},TimeAsc:{timeAsc}, TimeDesc:{timeDesc}");
+
         }
     }
 }
