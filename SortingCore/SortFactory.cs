@@ -1,7 +1,8 @@
 ﻿namespace SortingCore
 {
     public enum Algorithm {
-        BubbleSort
+        BubbleSort,
+        SelectionSort
     }
 
     public class SortFactory
@@ -12,6 +13,8 @@
             {
                 case Algorithm.BubbleSort:
                     return new BubbleSort();
+                case Algorithm.SelectionSort:
+                    return new SelectionSort();
             }
             return null;
         }

@@ -17,9 +17,10 @@ namespace SortAlgorithms
 
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
+            ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
             List<int> iterations = new List<int>();
             iterations.Add(10000);
-            //iterations.Add(100000);
+            iterations.Add(100000);
             //iterations.Add(1000000);
             //iterations.Add(10000000);
             FileService fileService = new FileService();
@@ -27,6 +28,7 @@ namespace SortAlgorithms
             foreach (int iteration in iterations)
             {
                 Sort(sortable,iteration, fileService);
+                Sort(sortableSelection, iteration, fileService);
             }
             
 
