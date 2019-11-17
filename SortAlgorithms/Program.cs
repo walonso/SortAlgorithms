@@ -14,10 +14,14 @@ namespace SortAlgorithms
             //la copia del array no hacerla aca, aunque revisar como se comporta con gran cantidad de datos: uso de memoria
             //implementar un Comparable en el core
             //No hacerlo secuencial, hacer un randmon, pero se podra de numeros unicos?
+            //meter los tipos de algorimos en una carpeta aparte.
+            //crear interfaz y tres diferentes clases que provean las listas con los numeros a ordenar (una clase de ascendingNumbers, otra de descendingNumbers y otra de RandomNumbers)
 
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
             ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
+            ISortable sortableInsertion = factory.GetSortable(Algorithm.InsertionSort);
+
             List<int> iterations = new List<int>();
             iterations.Add(10000);
             iterations.Add(100000);
@@ -27,8 +31,9 @@ namespace SortAlgorithms
             fileService.Delete(path);
             foreach (int iteration in iterations)
             {
-                Sort(sortable,iteration, fileService);
+                Sort(sortable, iteration, fileService);
                 Sort(sortableSelection, iteration, fileService);
+                Sort(sortableInsertion, iteration, fileService);
             }
             
 
@@ -45,6 +50,7 @@ namespace SortAlgorithms
             Console.ReadKey();
         }
 
+        //TODO:
         private static List<int> GetListToOrder(int amount)
         {
             List<int> list = new List<int>();
@@ -53,6 +59,22 @@ namespace SortAlgorithms
                 list.Add(i);
             }
 
+            return list;
+        }
+
+        //TODO:
+        private static List<int> GetListInDisorderToOrder(int amount)
+        {
+            List<int> list = GetListToOrder(amount);
+            Random rnd = new Random();
+            for (int i = 0; i < amount / 2; i++)
+            {
+                int randomFirstPosition = rnd.Next(amount);
+                int randomSecondPosition = rnd.Next(amount);
+                int aux = list[randomFirstPosition];
+                list[randomFirstPosition] = list[randomSecondPosition];
+                list[randomSecondPosition] = aux;
+            }
             return list;
         }
 

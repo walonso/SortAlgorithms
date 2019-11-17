@@ -2,7 +2,8 @@
 {
     public enum Algorithm {
         BubbleSort,
-        SelectionSort
+        SelectionSort,
+        InsertionSort
     }
 
     public class SortFactory
@@ -15,6 +16,9 @@
                     return new BubbleSort();
                 case Algorithm.SelectionSort:
                     return new SelectionSort();
+                case Algorithm.InsertionSort:
+                    return new InsertionSort();
+
             }
             return null;
         }
