@@ -18,7 +18,8 @@ namespace SortAlgorithms
             //implementar un Comparable en el core
             //Incluir el llamado tambn a random y ordenarlo.
             //Incluir Signal R para realizar una grafica en el front (y sea el back el q envia los datos)
-            
+            //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1
+
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
             ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
