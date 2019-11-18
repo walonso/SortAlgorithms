@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SortingCore.Interfaces;
 using System.Collections.Generic;
-using System.Text;
 
-namespace SortingCore
+namespace SortingCore.Services.Sortables
 {
     public class SelectionSort : ISortable
     {

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using SortingCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SortingCore
+namespace SortingCore.Services.Sortables
 {
     public class BubbleSort : ISortable
     {

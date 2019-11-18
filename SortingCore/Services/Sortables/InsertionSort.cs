@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SortingCore.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace SortingCore
+namespace SortingCore.Services.Sortables
 {
     public class InsertionSort : ISortable
     {

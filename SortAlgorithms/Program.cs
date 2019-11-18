@@ -1,4 +1,7 @@
 ﻿using SortingCore;
+using SortingCore.Interfaces;
+using SortingCore.Services.GeneratorItems;
+using SortingCore.Services.Sortables;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,14 +16,15 @@ namespace SortAlgorithms
             //TODO:
             //la copia del array no hacerla aca, aunque revisar como se comporta con gran cantidad de datos: uso de memoria
             //implementar un Comparable en el core
-            //No hacerlo secuencial, hacer un randmon, pero se podra de numeros unicos?
-            //meter los tipos de algorimos en una carpeta aparte.
-            //crear interfaz y tres diferentes clases que provean las listas con los numeros a ordenar (una clase de ascendingNumbers, otra de descendingNumbers y otra de RandomNumbers)
-
+            //Incluir el llamado tambn a random y ordenarlo.
+            //Incluir Signal R para realizar una grafica en el front (y sea el back el q envia los datos)
+            
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
             ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
             ISortable sortableInsertion = factory.GetSortable(Algorithm.InsertionSort);
+
+            IGeneratorItems generatorItems = new AscendingGenerator();
 
             List<int> iterations = new List<int>();
             iterations.Add(10000);
@@ -31,9 +35,9 @@ namespace SortAlgorithms
             fileService.Delete(path);
             foreach (int iteration in iterations)
             {
-                Sort(sortable, iteration, fileService);
-                Sort(sortableSelection, iteration, fileService);
-                Sort(sortableInsertion, iteration, fileService);
+                Sort(sortable, generatorItems, iteration, fileService);
+                Sort(sortableSelection, generatorItems, iteration, fileService);
+                Sort(sortableInsertion, generatorItems, iteration, fileService);
             }
             
 
@@ -48,34 +52,6 @@ namespace SortAlgorithms
             //Print(orderedDescList);
 
             Console.ReadKey();
-        }
-
-        //TODO:
-        private static List<int> GetListToOrder(int amount)
-        {
-            List<int> list = new List<int>();
-            for(int i = 0; i <= amount; i++)
-            {
-                list.Add(i);
-            }
-
-            return list;
-        }
-
-        //TODO:
-        private static List<int> GetListInDisorderToOrder(int amount)
-        {
-            List<int> list = GetListToOrder(amount);
-            Random rnd = new Random();
-            for (int i = 0; i < amount / 2; i++)
-            {
-                int randomFirstPosition = rnd.Next(amount);
-                int randomSecondPosition = rnd.Next(amount);
-                int aux = list[randomFirstPosition];
-                list[randomFirstPosition] = list[randomSecondPosition];
-                list[randomSecondPosition] = aux;
-            }
-            return list;
         }
 
         private static List<int> OrderAsc(ISortable sortable, List<int> list)
@@ -96,14 +72,14 @@ namespace SortAlgorithms
             }
         }
 
-        private static void Sort(ISortable sortable, int amount, FileService fileService)
+        private static void Sort(ISortable sortable, IGeneratorItems generatorItems, int amount, FileService fileService)
         {
             fileService.Save(path, sortable.ToString());
 
             Console.WriteLine("---- Analyze "+amount+" ----");
             TimeWatch timer = new TimeWatch();
             timer.Start();
-            List<int> list = GetListToOrder(amount);
+            List<int> list = generatorItems.GetData(amount);
             Console.WriteLine("Time Loading List: " + timer.GetEllapsedMilliSeconds());
 
             timer.Restart();

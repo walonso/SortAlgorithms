@@ -1,4 +1,6 @@
-﻿namespace SortingCore
+﻿using SortingCore.Interfaces;
+
+namespace SortingCore.Services.Sortables
 {
     public enum Algorithm {
         BubbleSort,
