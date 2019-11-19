@@ -65,5 +65,10 @@ namespace SortingCore.Services.Sortables
 
             return resultList;
         }
+
+        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

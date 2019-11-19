@@ -1,10 +1,16 @@
 ﻿using SortingCore.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace SortingCore.Services.Sortables
 {
     public class SelectionSort : ISortable
     {
+        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<int> SortAscending(List<int> list)
         {
             int size = list.Count;

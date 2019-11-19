@@ -7,6 +7,8 @@ namespace SortingCore.Services.Sortables
 {
     public class BubbleSort : ISortable
     {
+        Func<int, int> CallBackByOrderedElement;
+
         public override string ToString()
         {
             return "BubbleSort";
@@ -22,7 +24,9 @@ namespace SortingCore.Services.Sortables
             int size = list.Count;
 
             for (int pass = 1; pass < size; ++pass)
-            { // outer loop
+            {
+                CallBackByOrderedElement?.Invoke(pass);
+                // outer loop
                 for (int left = 0; left < (size - pass); ++left)
                 { // inner loop
                     int right = left + 1;
@@ -48,7 +52,9 @@ namespace SortingCore.Services.Sortables
             int size = list.Count;
 
             for (int pass = 1; pass < size; ++pass)
-            { // outer loop
+            {
+                CallBackByOrderedElement?.Invoke(pass);
+                // outer loop
                 for (int left = 0; left < (size - pass); ++left)
                 { // inner loop
                     int right = left + 1;
@@ -62,6 +68,11 @@ namespace SortingCore.Services.Sortables
             }
 
             return list;
+        }
+
+        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
+        {
+            CallBackByOrderedElement = CallBack;
         }
     }
 }
