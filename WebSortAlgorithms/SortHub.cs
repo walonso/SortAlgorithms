@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using SortingCore;
 using SortingCore.Interfaces;
+using SortingCore.Services;
 using SortingCore.Services.GeneratorItems;
 using SortingCore.Services.Sortables;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using static SortingCore.Services.TimeWatchSortable;
 
 namespace WebSortAlgorithms
 {
@@ -24,7 +28,7 @@ namespace WebSortAlgorithms
             //aTimer.Interval = 3000;
             //aTimer.Enabled = true;
 
-            Sort(path, sortable, generatorItems, 1000, fileService);
+            await Sort(path, sortable, generatorItems, 10000, fileService);
             
             await Clients.All.SendAsync("ReceiveMessage", "text");
         }
@@ -37,8 +41,22 @@ namespace WebSortAlgorithms
 
 
 
-        private void Sort(string path, ISortable sortable, IGeneratorItems generatorItems, int amount, FileService fileService)
+        private async Task Sort(string path, ISortable sortable, IGeneratorItems generatorItems, int amount, FileService fileService)
         {
+            var p = new Progress<TimeAndValue>(m =>
+            {
+                Clients.All.SendAsync("ReceiveMessage", m.time, m.value);
+            });
+
+            TimeWatchSortable timeWatchSortable = new TimeWatchSortable();
+            timeWatchSortable.SetProgress(p);
+            timeWatchSortable.SetSortable(sortable);
+
+            List<int> list = generatorItems.GetData(amount);
+
+            timeWatchSortable.Start();
+            sortable.SortAscending(list);
+
             //fileService.Save(path, sortable.ToString());
 
             //Console.WriteLine("---- Analyze " + amount + " ----");

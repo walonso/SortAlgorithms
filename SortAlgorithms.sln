@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SortAlgorithms", "SortAlgor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SortingCore", "SortingCore\SortingCore.csproj", "{C17347C7-758A-4E69-AFA2-C4A1A295351D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSortAlgorithms", "WebSortAlgorithms\WebSortAlgorithms.csproj", "{C5070C71-6F6B-4EC9-9B2E-337C731E191B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebSortAlgorithms", "WebSortAlgorithms\WebSortAlgorithms.csproj", "{C5070C71-6F6B-4EC9-9B2E-337C731E191B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{F4ED3AC3-B074-4C49-B8FE-A212329B5D75}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Users\kokor\Downloads\Class Diagram.drawio = ..\..\..\..\Users\kokor\Downloads\Class Diagram.drawio
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

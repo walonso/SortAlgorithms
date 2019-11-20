@@ -7,6 +7,13 @@ namespace SortingCore.Services.Sortables
 {
     public class InsertionSort : ISortable
     {
+        IProgress<int> Progress;
+
+        public void SetCallBackMethodByOrderedElement(IProgress<int> CallBack)
+        {
+            Progress = CallBack;
+        }
+
         public override string ToString()
         {
             return "InsertionSort";
@@ -24,6 +31,7 @@ namespace SortingCore.Services.Sortables
 
             for (int pass = 0; pass < size; ++pass)
             {
+                Progress?.Report(pass);
                 int slot = resultList.Count;
                 while (slot > 0)
                 {
@@ -51,6 +59,7 @@ namespace SortingCore.Services.Sortables
 
             for (int pass = 0; pass < size; ++pass)
             {
+                Progress?.Report(pass);
                 int slot = resultList.Count;
                 while (slot > 0)
                 {
@@ -64,11 +73,6 @@ namespace SortingCore.Services.Sortables
             }
 
             return resultList;
-        }
-
-        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
-        {
-            throw new NotImplementedException();
-        }
+        }        
     }
 }

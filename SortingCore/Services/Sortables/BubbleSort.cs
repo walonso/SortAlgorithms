@@ -7,11 +7,11 @@ namespace SortingCore.Services.Sortables
 {
     public class BubbleSort : ISortable
     {
-        Func<int, int> CallBackByOrderedElement;
+        IProgress<int> Progress;
 
-        public override string ToString()
+        public void SetCallBackMethodByOrderedElement(IProgress<int> CallBack)
         {
-            return "BubbleSort";
+            Progress = CallBack;
         }
 
         public List<int> SortAscending(List<int> list)
@@ -25,7 +25,7 @@ namespace SortingCore.Services.Sortables
 
             for (int pass = 1; pass < size; ++pass)
             {
-                CallBackByOrderedElement?.Invoke(pass);
+                Progress?.Report(pass);
                 // outer loop
                 for (int left = 0; left < (size - pass); ++left)
                 { // inner loop
@@ -53,7 +53,7 @@ namespace SortingCore.Services.Sortables
 
             for (int pass = 1; pass < size; ++pass)
             {
-                CallBackByOrderedElement?.Invoke(pass);
+                Progress?.Report(pass);
                 // outer loop
                 for (int left = 0; left < (size - pass); ++left)
                 { // inner loop
@@ -70,9 +70,9 @@ namespace SortingCore.Services.Sortables
             return list;
         }
 
-        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
+        public override string ToString()
         {
-            CallBackByOrderedElement = CallBack;
+            return "BubbleSort";
         }
     }
 }

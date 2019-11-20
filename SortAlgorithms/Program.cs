@@ -19,6 +19,8 @@ namespace SortAlgorithms
             //Incluir el llamado tambn a random y ordenarlo.
             //Incluir Signal R para realizar una grafica en el front (y sea el back el q envia los datos)
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1
+            //desacoplar del hub el llamado directo a los sort y demas.
+            //conertir los metodos de los sort en async
 
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);

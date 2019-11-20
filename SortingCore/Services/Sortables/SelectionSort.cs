@@ -6,9 +6,11 @@ namespace SortingCore.Services.Sortables
 {
     public class SelectionSort : ISortable
     {
-        public void SetCallBackMethodByOrderedElement(Func<int, int> CallBack)
+        IProgress<int> Progress;
+
+        public void SetCallBackMethodByOrderedElement(IProgress<int> CallBack)
         {
-            throw new NotImplementedException();
+            Progress = CallBack;
         }
 
         public List<int> SortAscending(List<int> list)
@@ -17,6 +19,7 @@ namespace SortingCore.Services.Sortables
 
             for (int slot = 0; slot < size - 1; ++slot)
             { // outer loop
+                Progress?.Report(slot);
                 int smallest = slot;
                 for (int check = slot + 1; check < size; ++check)
                 { // inner loop
@@ -35,6 +38,7 @@ namespace SortingCore.Services.Sortables
 
             for (int slot = 0; slot < size - 1; ++slot)
             { // outer loop
+                Progress?.Report(slot);
                 int tallest = slot;
                 for (int check = slot + 1; check < size; ++check)
                 { // inner loop

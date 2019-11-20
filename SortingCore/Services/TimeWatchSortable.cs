@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SortingCore.Services
 {
     public class TimeWatchSortable
     {
         ISortable Sortable;
+
+        IProgress<TimeAndValue> Progress;
 
         public class TimeAndValue
         {
@@ -17,25 +20,30 @@ namespace SortingCore.Services
 
         private System.Diagnostics.Stopwatch watch;
 
-        public static int CallBackByOrderedElement(int n)
+        public void SetProgress(IProgress<TimeAndValue> CallBack)
         {
-            //sendValue(n);
-            return n;
+            Progress = CallBack;
         }
-        //Func<int, int> CallBack = CallBackByOrderedElement;
 
         public void SetSortable(ISortable sortable)
         {
+            var p = new Progress<int>(m =>
+            {
+                Progress?.Report(sendValue(m));
+            });
+
             Sortable = sortable;
-            Sortable.SetCallBackMethodByOrderedElement(CallBackByOrderedElement);
+            Sortable.SetCallBackMethodByOrderedElement(p);
+        }
+
+        public ISortable GetSortable()
+        {
+            return Sortable;
         }
 
         public void Start()
         {
-            watch = System.Diagnostics.Stopwatch.StartNew();
-
-            watch.Stop();
-            var elapsedMs = watch.ElapsedMilliseconds;
+            watch = System.Diagnostics.Stopwatch.StartNew();                       
         }
 
         public TimeAndValue sendValue(int number)
