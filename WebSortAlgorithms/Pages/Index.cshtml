@@ -4,45 +4,96 @@
     ViewData["Title"] = "Home page";
 }
 
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChartBubble);
+    google.charts.setOnLoadCallback(drawChartSelection);
+
+    var arrayDataBubble = [['value', 'time'], [0, 0]];
+    var arrayDataSelection = [['value', 'time'], [0, 0]];
+    var arrayDataInsertion = [['value', 'time'], [0, 0]];
+
+    var intervBubble = null;
+    var intervSelection = null;
+
+    function drawChartBubble() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataBubble
+        );
+
+        var options = {
+            title: 'Bubble Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    }
+
+    function drawChartSelection() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataSelection
+        );
+
+        var options = {
+            title: 'Selection Sort',
+            hAxis: { title: 'value' },
+            vAxis: { title: 'time' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_divSelection'));
+
+        chart.draw(data, options);
+    }
+
+    function updateChartBubble(time, value) {
+        var amount = parseInt(document.getElementById("idAmount").value)-1;
+        this.arrayDataBubble.push([time, value]);
+        if (intervBubble === null) {
+            intervBubble = setInterval(drawChartBubble, 1);
+        }
+        if (amount === value) {
+            clearInterval(intervBubble);
+        }
+    };
+
+    function updateChartSelection(time, value) {
+        this.arrayDataSelection.push([time, value]);
+        var amount = parseInt(document.getElementById("idAmount").value)-1;
+
+        if (intervSelection === null) {
+            intervSelection = setInterval(drawChartSelection, 1);
+        }
+        if (amount === value) {
+            clearInterval(intervSelection);
+        }
+    };
+
+</script>
+
+
 <h1>Sort Algorythms</h1>
 
 <h2>Buble Sort</h2>
 <input type="button" id="idBubleSort" value="Start Buble Sort" />
+<h2>Selection Sort</h2>
+<input type="button" id="idSelectionSort" value="Start Selection Sort" />
 
-<div class="row">
-    <div class="col-6">
-        <ul id="NumbersList"></ul>
-    </div>
-</div>
+<!--Div that will hold the pie chart-->
+<input id="idAmount" />
 
-<!--
-<div class="container">
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-2">number</div>
-        <div class="col-4"><input type="text" id="userInput" /></div>
-    </div>
-    <div class="row">
-        <div class="col-2">Message</div>
-        <div class="col-4"><input type="text" id="messageInput" /></div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="sendButton" value="Send Message" />
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <hr />
-    </div>
-</div>
-<div class="row">
-    <div class="col-6">
-        <ul id="messagesList"></ul>
-    </div>
-</div>
-    -->
+
+<div id="chart_div" style="width: 500px; height: 300px;"></div>
+<div id="chart_divSelection" style="width: 500px; height: 300px;"></div>
+
+
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/Client.js"></script>

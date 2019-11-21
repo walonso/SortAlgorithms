@@ -20,7 +20,7 @@ namespace SortAlgorithms
             //Incluir Signal R para realizar una grafica en el front (y sea el back el q envia los datos)
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1
             //desacoplar del hub el llamado directo a los sort y demas.
-            //conertir los metodos de los sort en async
+            //para las graficas agregar la del insert y en una sola grafica poder mostrar las 3 comparaciones.
 
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
@@ -43,17 +43,6 @@ namespace SortAlgorithms
                 Sort(sortableInsertion, generatorItems, iteration, fileService);
             }
             
-
-            
-            //Console.WriteLine("Original list:");
-            //Print(list);
-
-            //Console.WriteLine("Ordered Asc list:");
-            //Print(orderedList);
-
-            //Console.WriteLine("Ordered Desc list:");
-            //Print(orderedDescList);
-
             Console.ReadKey();
         }
 
