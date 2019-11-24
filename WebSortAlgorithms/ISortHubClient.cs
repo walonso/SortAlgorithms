@@ -7,6 +7,8 @@ namespace WebSortAlgorithms
 {
     public interface ISortHubClient
     {
-        Task ReceiveProgressSortBubble(long time, int value);
+        Task ReceiveProgressAscSortBubble(long time, int value);
+
+        Task ReceiveProgressAscSortSelection(long time, int value);
     }
 }

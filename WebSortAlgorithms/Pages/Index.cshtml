@@ -1,7 +1,9 @@
 ﻿@page
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    //using ModelCardSortView;
+    // ViewData["Title"] = "Home page";
 }
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -54,42 +56,81 @@
 
         chart.draw(data, options);
     }
+    
+    /// Bubble sort
+    function initBubbleSort() {
+        this.arrayDataBubble = [['value', 'time'], [0, 0]];
+    }
 
-    function updateChartBubble(time, value) {
-        this.arrayDataBubble.push([time, value]);
-        drawChartBubble(); 
-    };
-
-    function updateChartSelection(time, value) {
-        this.arrayDataSelection.push([time, value]);
-        drawChartSelection(); 
-    };
-
-    function initIntervalRenderingBubbleSort() {  
+    function initIntervalRenderingBubbleSort() {
         if (intervBubble === null) {
-            intervBubble = setInterval(drawChartBubble, 2000);
+            intervBubble = setInterval(updateChartBubble, 10);
         }
     };
-    function finishIntervalRenderingBubbleSort() {       
-        clearInterval(intervBubble);
+
+    function addBubbleItem(time, value) {
+         console.log('updateChartBubble ',time, ' - ', value);
+        this.arrayDataBubble.push([time, value]);
+    }
+
+    function updateChartBubble() {
+        drawChartBubble();
+
+        let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataBubble.length)
+        console.log(amount + 2)
+        if (this.arrayDataBubble.length === amount + 2) {
+            console.log('etro a limpiar!!',amount + 2)
+            clearInterval(intervBubble);
+            intervBubble = null;
+        }
     };
+
+    /// Bubble sort
+
+    /// Selection sort
+
+    function initSelectionSort() {
+        this.arrayDataSelection = [['value', 'time'], [0, 0]];
+    }
+    function initIntervalRenderingSelectionSort() {
+        if (intervSelection === null) {
+            intervSelection = setInterval(updateChartSelection, 10);
+        }
+    };
+
+    function addSelectionItem(time, value) {
+        this.arrayDataSelection.push([time, value]);
+    }
+
+    function updateChartSelection() {
+        drawChartSelection();
+
+         let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataSelection.length)
+        console.log(amount + 2)
+        if (this.arrayDataSelection.length === amount + 2) {
+            console.log('etro a limpiar!!',amount + 2)
+            clearInterval(intervSelection);
+            intervSelection = null;
+        }
+    };
+
+    /// Selection sort
 
 </script>
 
 
 <h1>Sort Algorythms</h1>
+<span>Quantity items:</span> <input style="display:block" id="idAmount" />
 
-<h2>Buble Sort</h2>
-<input type="button" id="idBubleSort" value="Start Buble Sort" />
-<h2>Selection Sort</h2>
-<input type="button" id="idSelectionSort" value="Start Selection Sort" />
-
-<!--Div that will hold the pie chart-->
-<input id="idAmount" />
-
-
-<div id="chart_div" style="width: 500px; height: 300px;"></div>
-<div id="chart_divSelection" style="width: 500px; height: 300px;"></div>
+<div style="float:left; width:33%">
+    @await Html.PartialAsync("SortViews/_PartialBubbleSort.cshtml")
+    <!--<prtial name="SortViews/_PartialBubbleSort.cshtml" />-->
+</div>
+<div style="float: left;width:33%">
+    @await Html.PartialAsync("SortViews/_PartialSelectionSort.cshtml")
+</div>
 
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>

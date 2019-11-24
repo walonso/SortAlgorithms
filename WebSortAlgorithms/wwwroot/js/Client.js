@@ -14,15 +14,15 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/SortHub").build();
 //document.getElementById("sendButton").disabled = true;
 
 //connection.on("ReceiveMessage", function (user, message) {
-connection.on("ReceiveProgressSortBubble", function (time, value) {
-    updateChartBubble(time, value);    
+connection.on("ReceiveProgressAscSortBubble", function (time, value) {
+    addBubbleItem(time, value);    
 });
 
-connection.on("ReceiveProgressSortSelection", function (time, value) {
-    updateChartSelection(time, value);
+connection.on("ReceiveProgressAscSortSelection", function (time, value) {
+    addSelectionItem(time, value);
 });
 
-connection.on("ReceiveProgressSortInsertion", function (time, value) {
+connection.on("ReceiveProgressAscSortInsertion", function (time, value) {
     updateChartInsertion(time, value);
 });
 
@@ -44,27 +44,27 @@ connection.start().then(function () {
 });*/
 
 document.getElementById("idBubleSort").addEventListener("click", function (event) {   
+    initBubbleSort();
     initIntervalRenderingBubbleSort();
     var amount = document.getElementById("idAmount").value;
-    $.get("/Sort/RunBubbleSort/" + amount).catch(function (err) {
+    $.get("/Sort/RunBubbleSortAscending/" + amount).catch(function (err) {
         return console.error(err.toString());
     }).then(() => {
-        finishIntervalRenderingBubbleSort();
+       // finishIntervalRenderingBubbleSort();
         console.log("finish");
     });
-
-    //connection.invoke("SendMessage", user, message).catch(function (err) {
-    /*var amount = document.getElementById("idAmount").value;
-    connection.invoke("Sort/RunBubbleSort", amount).catch(function (err) {
-        return console.error(err.toString());
-    });*/
     event.preventDefault();
 }); 
+
 document.getElementById("idSelectionSort").addEventListener("click", function (event) {
-    //connection.invoke("SendMessage", user, message).catch(function (err) {
+    initSelectionSort();
+    initIntervalRenderingSelectionSort();
     var amount = document.getElementById("idAmount").value;
-    connection.invoke("Sort/RunBubbleSort", amount).catch(function (err) {
+    $.get("/Sort/RunSelectionSortAscending/" + amount).catch(function (err) {
         return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingSelectionSort();
+        console.log("finish");
     });
     event.preventDefault();
 });

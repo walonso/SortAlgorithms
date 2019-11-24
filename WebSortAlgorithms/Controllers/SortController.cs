@@ -20,8 +20,8 @@ namespace WebSortAlgorithms.Controllers
             _hubContext = hubContext;
         }
 
-        [Route("RunBubbleSort/{amount}")]
-        public async Task RunBubbleSort(int amount)
+        [Route("RunBubbleSortAscending/{amount}")]
+        public async Task RunBubbleSortAcending(int amount)
         {
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
@@ -30,7 +30,23 @@ namespace WebSortAlgorithms.Controllers
             
             var p = new Progress<SortingCore.Services.TimeWatchSortable.TimeAndValue>(async m =>
             {
-                await _hubContext.Clients.All.ReceiveProgressSortBubble(m.time, m.value);
+                await _hubContext.Clients.All.ReceiveProgressAscSortBubble(m.time, m.value);
+            });
+
+            await Sort(sortable, generatorItems, amount, p, cts);
+        }
+
+        [Route("RunSelectionSortAscending/{amount}")]
+        public async Task RunSelectionSortAcending(int amount)
+        {
+            SortFactory factory = new SortFactory();
+            ISortable sortable = factory.GetSortable(Algorithm.SelectionSort);
+            IGeneratorItems generatorItems = new AscendingGenerator();
+            CancellationTokenSource cts = new CancellationTokenSource();
+
+            var p = new Progress<SortingCore.Services.TimeWatchSortable.TimeAndValue>(async m =>
+            {
+                await _hubContext.Clients.All.ReceiveProgressAscSortSelection(m.time, m.value);
             });
 
             await Sort(sortable, generatorItems, amount, p, cts);
