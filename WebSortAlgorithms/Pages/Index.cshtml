@@ -12,6 +12,7 @@
     google.charts.load('current', { 'packages': ['corechart'] });
     google.charts.setOnLoadCallback(drawChartBubble);
     google.charts.setOnLoadCallback(drawChartSelection);
+    //google.charts.setOnLoadCallback(drawChartSelection);
 
     var arrayDataBubble = [['value', 'time'], [0, 0]];
     var arrayDataSelection = [['value', 'time'], [0, 0]];
@@ -55,26 +56,22 @@
     }
 
     function updateChartBubble(time, value) {
-        var amount = parseInt(document.getElementById("idAmount").value)-1;
         this.arrayDataBubble.push([time, value]);
-        if (intervBubble === null) {
-            intervBubble = setInterval(drawChartBubble, 1);
-        }
-        if (amount === value) {
-            clearInterval(intervBubble);
-        }
+        drawChartBubble(); 
     };
 
     function updateChartSelection(time, value) {
         this.arrayDataSelection.push([time, value]);
-        var amount = parseInt(document.getElementById("idAmount").value)-1;
+        drawChartSelection(); 
+    };
 
-        if (intervSelection === null) {
-            intervSelection = setInterval(drawChartSelection, 1);
+    function initIntervalRenderingBubbleSort() {  
+        if (intervBubble === null) {
+            intervBubble = setInterval(drawChartBubble, 2000);
         }
-        if (amount === value) {
-            clearInterval(intervSelection);
-        }
+    };
+    function finishIntervalRenderingBubbleSort() {       
+        clearInterval(intervBubble);
     };
 
 </script>

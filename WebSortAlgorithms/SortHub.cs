@@ -1,72 +1,66 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using SortingCore;
-using SortingCore.Interfaces;
-using SortingCore.Services;
-using SortingCore.Services.GeneratorItems;
-using SortingCore.Services.Sortables;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using static SortingCore.Services.TimeWatchSortable;
 
 namespace WebSortAlgorithms
 {
-    public class SortHub : Hub
+    public class SortHub : Hub<ISortHubClient>
     {
-        public async Task StartBubleSort(int amount)
+        public override Task OnConnectedAsync()
         {
-            SortFactory factory = new SortFactory();
-            ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
-            IGeneratorItems generatorItems = new AscendingGenerator();
+            string userName = Context.User.Identity.Name;
+            string connectionId = Context.ConnectionId;
 
-            var p = new Progress<TimeAndValue>(m =>
-            {
-                Clients.All.SendAsync("ReceiveProgressSortBubble", m.time, m.value);
-            });
+            //var user = Users.GetOrAdd(userName, _ => new User
+            //{
+            //    Name = userName,
+            //    ConnectionIds = new HashSet<string>()
+            //});
 
-            await Sort(sortable, generatorItems, amount, p);            
+            //lock (user.ConnectionIds)
+            //{
+
+            //    user.ConnectionIds.Add(connectionId);
+
+            //    // TODO: Broadcast the connected user
+            //}
+
+
+            //Clients.Client(connectionId).Welcome("hello");
+            return base.OnConnectedAsync();
         }
-
-        public async Task StartSelectionSort(int amount)
+        
+        public override Task OnDisconnectedAsync(Exception exception)
         {
-            SortFactory factory = new SortFactory();
-            ISortable sortable = factory.GetSortable(Algorithm.SelectionSort);
-            IGeneratorItems generatorItems = new AscendingGenerator();
+            string userName = Context.User.Identity.Name;
+            string connectionId = Context.ConnectionId;
 
-            var p = new Progress<TimeAndValue>(m =>
-            {
-                Clients.All.SendAsync("ReceiveProgressSortSelection", m.time, m.value);
-            });
+            //User user;
+            //Users.TryGetValue(userName, out user);
 
+            //if (user != null)
+            //{
 
-            await Sort(sortable, generatorItems, amount, p);
-        }
+            //    lock (user.ConnectionIds)
+            //    {
 
-        public async Task StartInsertionSort(int amount)
-        {
-            SortFactory factory = new SortFactory();
-            ISortable sortable = factory.GetSortable(Algorithm.InsertionSort);
-            IGeneratorItems generatorItems = new AscendingGenerator();
+            //        user.ConnectionIds.RemoveWhere(cid => cid.Equals(connectionId));
 
-            var p = new Progress<TimeAndValue>(m =>
-            {
-                Clients.All.SendAsync("ReceiveProgressSortInsertion", m.time, m.value);
-            });
+            //        if (!user.ConnectionIds.Any())
+            //        {
 
-            await Sort(sortable, generatorItems, amount, p);
-        }
+            //            User removedUser;
+            //            Users.TryRemove(userName, out removedUser);
 
-        private async Task Sort(ISortable sortable, IGeneratorItems generatorItems, int amount, IProgress<TimeAndValue> p)
-        {
-            TimeWatchSortable timeWatchSortable = new TimeWatchSortable();
-            timeWatchSortable.SetProgress(p);
-            timeWatchSortable.SetSortable(sortable);
+            //            // You might want to only broadcast this info if this 
+            //            // is the last connection of the user and the user actual is 
+            //            // now disconnected from all connections.
+            //            Clients.Others.userDisconnected(userName);
+            //        }
+            //    }
+            //}
 
-            List<int> list = generatorItems.GetData(amount);
-
-            timeWatchSortable.Start();
-            await Task.Run(()=> sortable.SortAscending(list));
-        }
+            return base.OnDisconnectedAsync(exception);
+        }       
     }
 }

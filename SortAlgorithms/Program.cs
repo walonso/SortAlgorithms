@@ -21,6 +21,7 @@ namespace SortAlgorithms
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.1
             //desacoplar del hub el llamado directo a los sort y demas.
             //para las graficas agregar la del insert y en una sola grafica poder mostrar las 3 comparaciones.
+            //el back devuelva cuando termina de ordenar, de esa forma se puede hacer el clean del interval
 
             SortFactory factory = new SortFactory();
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
