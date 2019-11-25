@@ -1,0 +1,77 @@
+﻿<h2>Shell Sort</h2>
+<input type="button" id="idShellSort" value="Start Shell Sort" />
+<div id="chartShell_div" style="width: 100%; height: 300px;"></div>
+
+<script>
+
+    google.charts.setOnLoadCallback(drawChartShell);
+
+    var arrayDataShell = [['value', 'time'], [0, 0]];
+
+    var intervShell = null;
+
+    function drawChartShell() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataShell
+        );
+
+        var options = {
+            title: 'Shell Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chartShell_div'));
+
+        chart.draw(data, options);
+    }
+
+     /// Bubble sort
+    function initShellSort() {
+        this.arrayDataShell = [['value', 'time'], [0, 0]];
+        if (intervShell !== null) {
+            clearInterval(intervShell);
+            intervShell = null;
+        }
+    }
+
+    function initIntervalRenderingShellSort() {
+        if (intervShell === null) {
+            intervShell = setInterval(updateChartShell, 10);
+        }
+    };
+
+    function addShellItem(time, value) {
+        this.arrayDataShell.push([time, value]);
+    }
+
+    function updateChartShell() {
+        drawChartShell();
+
+        let amount = parseInt(document.getElementById("idAmount").value);
+      //  console.log(this.arrayDataShell.length)
+      //  console.log(amount + 2)
+        if (this.arrayDataShell.length >= amount + 2) {
+            drawChartShell();
+            initShellSort();
+        }
+    };
+
+
+    /// Bubble sort
+
+    document.getElementById("idShellSort").addEventListener("click", function (event) {
+    initShellSort();
+    initIntervalRenderingShellSort();
+    var amount = document.getElementById("idAmount").value;
+    $.get("/Sort/RunShellSortAscending/" + amount).catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingBubbleSort();
+        console.log("finish");
+    });
+    event.preventDefault();
+});
+
+</script>

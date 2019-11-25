@@ -26,6 +26,10 @@ connection.on("ReceiveProgressAscSortInsertion", function (time, value) {
     addInsertionItem(time, value);
 });
 
+connection.on("ReceiveProgressAscSortShell", function (time, value) {
+    console.log('receive..', time, value)
+    addShellItem(time, value);
+});
 
 connection.start().then(function () {
     document.getElementById("idBubleSort").disabled = false;

@@ -5,7 +5,8 @@ namespace SortingCore.Services.Sortables
     public enum Algorithm {
         BubbleSort,
         SelectionSort,
-        InsertionSort
+        InsertionSort,
+        ShellSort
     }
 
     public class SortFactory
@@ -20,7 +21,8 @@ namespace SortingCore.Services.Sortables
                     return new SelectionSort();
                 case Algorithm.InsertionSort:
                     return new InsertionSort();
-
+                case Algorithm.ShellSort:
+                    return new ShellSort();
             }
             return null;
         }

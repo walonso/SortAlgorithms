@@ -27,12 +27,14 @@ namespace SortAlgorithms
             ISortable sortable = factory.GetSortable(Algorithm.BubbleSort);
             ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
             ISortable sortableInsertion = factory.GetSortable(Algorithm.InsertionSort);
+            ISortable sortableShell = factory.GetSortable(Algorithm.ShellSort);
+
 
             IGeneratorItems generatorItems = new AscendingGenerator();
 
             List<int> iterations = new List<int>();
             iterations.Add(10000);
-            iterations.Add(100000);
+            //iterations.Add(100000);
             //iterations.Add(1000000);
             //iterations.Add(10000000);
             FileService fileService = new FileService();
@@ -42,6 +44,7 @@ namespace SortAlgorithms
                 Sort(sortable, generatorItems, iteration, fileService);
                 Sort(sortableSelection, generatorItems, iteration, fileService);
                 Sort(sortableInsertion, generatorItems, iteration, fileService);
+                Sort(sortableShell, generatorItems, iteration, fileService);
             }
             
             Console.ReadKey();

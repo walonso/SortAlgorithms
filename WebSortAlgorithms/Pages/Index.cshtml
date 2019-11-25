@@ -12,12 +12,13 @@
 <script type="text/javascript">
 
     google.charts.load('current', { 'packages': ['corechart'] });
-       
+
 </script>
 
 
 <h1>Sort Algorythms</h1>
-<span>Quantity items:</span> <input style="display:block" id="idAmount" />
+<span>Quantity items:</span>
+<input style="display:block" id="idAmount" />
 
 <div style="float:left; width:33%">
     @await Html.PartialAsync("SortViews/_PartialBubbleSort.cshtml")
@@ -28,6 +29,9 @@
 </div>
 <div style="float: left;width:33%">
     @await Html.PartialAsync("SortViews/_PartialInsertionSort.cshtml")
+</div>
+<div style="float: left;width:33%">
+    @await Html.PartialAsync("SortViews/_PartialShellSort.cshtml")
 </div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
