@@ -1,3 +1,82 @@
 ﻿<h2>Selection Sort</h2>
 <input type="button" id="idSelectionSort" value="Start Selection Sort" />
 <div id="chart_divSelection" style="width: 100%; height: 300px;"></div>
+
+<script>
+     google.charts.setOnLoadCallback(drawChartSelection);
+    //google.charts.setOnLoadCallback(drawChartSelection);
+
+  
+    var arrayDataSelection = [['value', 'time'], [0, 0]];
+
+     var intervSelection = null;
+
+    
+
+    function drawChartSelection() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataSelection
+        );
+
+        var options = {
+            title: 'Selection Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_divSelection'));
+
+        chart.draw(data, options);
+    }
+    
+   
+
+    /// Selection sort
+
+    function initSelectionSort() {
+        this.arrayDataSelection = [['value', 'time'], [0, 0]];
+        if (intervSelection !== null) {
+            clearInterval(intervSelection);
+            intervSelection = null;
+        }
+    }
+    
+    function initIntervalRenderingSelectionSort() {
+        if (intervSelection === null) {
+            intervSelection = setInterval(updateChartSelection, 2000);
+        }
+    };
+
+    function addSelectionItem(time, value) {
+        this.arrayDataSelection.push([time, value]);
+    }
+
+    function updateChartSelection() {
+        drawChartSelection();
+
+         let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataSelection.length)
+        console.log(amount + 2)
+        if (this.arrayDataSelection.length >= amount + 2) {
+            console.log('etro a limpiar!!',amount + 2)
+            drawChartSelection();
+            initSelectionSort();
+        }
+    };
+
+    /// Selection sort
+
+    document.getElementById("idSelectionSort").addEventListener("click", function (event) {
+    initSelectionSort();
+    initIntervalRenderingSelectionSort();
+    var amount = document.getElementById("idAmount").value;
+    $.get("/Sort/RunSelectionSortAscending/" + amount).catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingSelectionSort();
+        console.log("finish");
+    });
+    event.preventDefault();
+});
+</script>

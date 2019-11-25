@@ -1,3 +1,77 @@
 ﻿<h2>Bubble Sort</h2>
 <input type="button" id="idBubleSort" value="Start Buble Sort" />
 <div id="chart_div" style="width: 100%; height: 300px;"></div>
+
+<script>
+
+    google.charts.setOnLoadCallback(drawChartBubble);
+
+    var arrayDataBubble = [['value', 'time'], [0, 0]];
+
+    var intervBubble = null;
+
+    function drawChartBubble() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataBubble
+        );
+
+        var options = {
+            title: 'Bubble Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    }
+
+     /// Bubble sort
+    function initBubbleSort() {
+        this.arrayDataBubble = [['value', 'time'], [0, 0]];
+        if (intervBubble !== null) {
+            clearInterval(intervBubble);
+            intervBubble = null;
+        }
+    }
+
+    function initIntervalRenderingBubbleSort() {
+        if (intervBubble === null) {
+            intervBubble = setInterval(updateChartBubble, 2000);
+        }
+    };
+
+    function addBubbleItem(time, value) {
+        this.arrayDataBubble.push([time, value]);
+    }
+
+    function updateChartBubble() {
+        drawChartBubble();
+
+        let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataBubble.length)
+        console.log(amount + 2)
+        if (this.arrayDataBubble.length >= amount + 2) {
+            drawChartBubble();
+            initBubbleSort();
+        }
+    };
+
+
+    /// Bubble sort
+
+    document.getElementById("idBubleSort").addEventListener("click", function (event) {   
+    initBubbleSort();
+    initIntervalRenderingBubbleSort();
+    var amount = document.getElementById("idAmount").value;
+    $.get("/Sort/RunBubbleSortAscending/" + amount).catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingBubbleSort();
+        console.log("finish");
+    });
+    event.preventDefault();
+}); 
+
+</script>

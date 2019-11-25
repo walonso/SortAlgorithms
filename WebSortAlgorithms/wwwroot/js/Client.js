@@ -23,7 +23,7 @@ connection.on("ReceiveProgressAscSortSelection", function (time, value) {
 });
 
 connection.on("ReceiveProgressAscSortInsertion", function (time, value) {
-    updateChartInsertion(time, value);
+    addInsertionItem(time, value);
 });
 
 
@@ -43,28 +43,5 @@ connection.start().then(function () {
     event.preventDefault();
 });*/
 
-document.getElementById("idBubleSort").addEventListener("click", function (event) {   
-    initBubbleSort();
-    initIntervalRenderingBubbleSort();
-    var amount = document.getElementById("idAmount").value;
-    $.get("/Sort/RunBubbleSortAscending/" + amount).catch(function (err) {
-        return console.error(err.toString());
-    }).then(() => {
-       // finishIntervalRenderingBubbleSort();
-        console.log("finish");
-    });
-    event.preventDefault();
-}); 
 
-document.getElementById("idSelectionSort").addEventListener("click", function (event) {
-    initSelectionSort();
-    initIntervalRenderingSelectionSort();
-    var amount = document.getElementById("idAmount").value;
-    $.get("/Sort/RunSelectionSortAscending/" + amount).catch(function (err) {
-        return console.error(err.toString());
-    }).then(() => {
-       // finishIntervalRenderingSelectionSort();
-        console.log("finish");
-    });
-    event.preventDefault();
-});
+

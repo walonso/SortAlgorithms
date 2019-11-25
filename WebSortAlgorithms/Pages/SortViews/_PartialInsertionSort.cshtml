@@ -1,0 +1,76 @@
+﻿<h2>Insertion Sort</h2>
+<input type="button" id="idInsertionSort" value="Start Insertion Sort" />
+<div id="chartInsertion_div" style="width: 100%; height: 300px;"></div>
+
+<script>
+
+    google.charts.setOnLoadCallback(drawChartInsertion);
+
+    var arrayDataInsertion = [['value', 'time'], [0, 0]];
+
+    var intervInsertion = null;
+
+    function drawChartInsertion() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataInsertion
+        );
+
+        var options = {
+            title: 'Insertion Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chartInsertion_div'));
+
+        chart.draw(data, options);
+    }
+
+     /// Bubble sort
+    function initInsertionSort() {
+        this.arrayDataInsertion = [['value', 'time'], [0, 0]];
+        if (intervInsertion !== null) {
+            clearInterval(intervInsertion);
+            intervInsertion = null;
+        }
+    }
+    
+    function initIntervalRenderingInsertionSort() {
+        if (intervInsertion === null) {
+            intervInsertion = setInterval(updateChartInsertion, 2000);
+        }
+    };
+
+    function addInsertionItem(time, value) {
+        this.arrayDataInsertion.push([time, value]);
+    }
+
+    function updateChartInsertion() {
+        drawChartInsertion();
+
+        let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataInsertion.length)
+        console.log(amount + 2)
+        if (this.arrayDataInsertion.length >= amount + 2) {
+            drawChartInsertion();
+            initInsertionSort();
+        }
+    };
+
+    /// Bubble sort
+
+    document.getElementById("idInsertionSort").addEventListener("click", function (event) {
+    initInsertionSort();
+    initIntervalRenderingInsertionSort();
+    var amount = document.getElementById("idAmount").value;
+    $.get("/Sort/RunInsertionSortAscending/" + amount).catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingBubbleSort();
+        console.log("finish");
+    });
+    event.preventDefault();
+});
+
+</script>

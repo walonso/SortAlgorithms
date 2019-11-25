@@ -12,112 +12,7 @@
 <script type="text/javascript">
 
     google.charts.load('current', { 'packages': ['corechart'] });
-    google.charts.setOnLoadCallback(drawChartBubble);
-    google.charts.setOnLoadCallback(drawChartSelection);
-    //google.charts.setOnLoadCallback(drawChartSelection);
-
-    var arrayDataBubble = [['value', 'time'], [0, 0]];
-    var arrayDataSelection = [['value', 'time'], [0, 0]];
-    var arrayDataInsertion = [['value', 'time'], [0, 0]];
-
-    var intervBubble = null;
-    var intervSelection = null;
-
-    function drawChartBubble() {
-        var data = google.visualization.arrayToDataTable(
-            this.arrayDataBubble
-        );
-
-        var options = {
-            title: 'Bubble Sort',
-            hAxis: { title: 'time' },
-            vAxis: { title: 'value' },
-            legend: 'none'
-        };
-
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-
-        chart.draw(data, options);
-    }
-
-    function drawChartSelection() {
-        var data = google.visualization.arrayToDataTable(
-            this.arrayDataSelection
-        );
-
-        var options = {
-            title: 'Selection Sort',
-            hAxis: { title: 'value' },
-            vAxis: { title: 'time' },
-            legend: 'none'
-        };
-
-        var chart = new google.visualization.ScatterChart(document.getElementById('chart_divSelection'));
-
-        chart.draw(data, options);
-    }
-    
-    /// Bubble sort
-    function initBubbleSort() {
-        this.arrayDataBubble = [['value', 'time'], [0, 0]];
-    }
-
-    function initIntervalRenderingBubbleSort() {
-        if (intervBubble === null) {
-            intervBubble = setInterval(updateChartBubble, 10);
-        }
-    };
-
-    function addBubbleItem(time, value) {
-         console.log('updateChartBubble ',time, ' - ', value);
-        this.arrayDataBubble.push([time, value]);
-    }
-
-    function updateChartBubble() {
-        drawChartBubble();
-
-        let amount = parseInt(document.getElementById("idAmount").value);
-        console.log(this.arrayDataBubble.length)
-        console.log(amount + 2)
-        if (this.arrayDataBubble.length === amount + 2) {
-            console.log('etro a limpiar!!',amount + 2)
-            clearInterval(intervBubble);
-            intervBubble = null;
-        }
-    };
-
-    /// Bubble sort
-
-    /// Selection sort
-
-    function initSelectionSort() {
-        this.arrayDataSelection = [['value', 'time'], [0, 0]];
-    }
-    function initIntervalRenderingSelectionSort() {
-        if (intervSelection === null) {
-            intervSelection = setInterval(updateChartSelection, 10);
-        }
-    };
-
-    function addSelectionItem(time, value) {
-        this.arrayDataSelection.push([time, value]);
-    }
-
-    function updateChartSelection() {
-        drawChartSelection();
-
-         let amount = parseInt(document.getElementById("idAmount").value);
-        console.log(this.arrayDataSelection.length)
-        console.log(amount + 2)
-        if (this.arrayDataSelection.length === amount + 2) {
-            console.log('etro a limpiar!!',amount + 2)
-            clearInterval(intervSelection);
-            intervSelection = null;
-        }
-    };
-
-    /// Selection sort
-
+       
 </script>
 
 
@@ -131,7 +26,9 @@
 <div style="float: left;width:33%">
     @await Html.PartialAsync("SortViews/_PartialSelectionSort.cshtml")
 </div>
-
+<div style="float: left;width:33%">
+    @await Html.PartialAsync("SortViews/_PartialInsertionSort.cshtml")
+</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/Client.js"></script>
