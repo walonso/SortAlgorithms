@@ -1,0 +1,77 @@
+﻿<h2>Merge Sort</h2>
+<input type="button" id="idMergeSort" value="Start Merge Sort" />
+<div id="chartMerge_div" style="width: 100%; height: 300px;"></div>
+
+<script>
+
+    google.charts.setOnLoadCallback(drawChartMerge);
+
+    var arrayDataMerge = [['value', 'time'], [0, 0]];
+
+    var intervMerge = null;
+
+    function drawChartMerge() {
+        var data = google.visualization.arrayToDataTable(
+            this.arrayDataMerge
+        );
+
+        var options = {
+            title: 'Merge Sort',
+            hAxis: { title: 'time' },
+            vAxis: { title: 'value' },
+            legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chartMerge_div'));
+
+        chart.draw(data, options);
+    }
+
+     /// Bubble sort
+    function initMergeSort() {
+        this.arrayDataMerge = [['value', 'time'], [0, 0]];
+        if (intervMerge !== null) {
+            clearInterval(intervMerge);
+            intervMerge = null;
+        }
+    }
+
+    function initIntervalRenderingMergeSort() {
+        if (intervMerge === null) {
+            intervMerge = setInterval(updateChartMerge, 2000);
+        }
+    };
+
+    function addMergeItem(time, value) {
+        this.arrayDataMerge.push([time, value]);
+    }
+
+    function updateChartMerge() {
+        drawChartMerge();
+
+        let amount = parseInt(document.getElementById("idAmount").value);
+        console.log(this.arrayDataMerge.length)
+        console.log(amount + 2)
+        if (this.arrayDataMerge.length >= amount + 2) {
+            drawChartMerge();
+            initMergeSort();
+        }
+    };
+
+
+    /// Bubble sort
+
+    document.getElementById("idMergeSort").addEventListener("click", function (event) {
+    initMergeSort();
+    initIntervalRenderingMergeSort();
+    var amount = document.getElementById("idAmount").value;
+    $.get("/Sort/RunMergeSortAscending/" + amount).catch(function (err) {
+        return console.error(err.toString());
+    }).then(() => {
+       // finishIntervalRenderingBubbleSort();
+        console.log("finish");
+    });
+    event.preventDefault();
+});
+
+</script>

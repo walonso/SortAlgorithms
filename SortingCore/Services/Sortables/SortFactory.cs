@@ -7,7 +7,8 @@ namespace SortingCore.Services.Sortables
         SelectionSort,
         InsertionSort,
         ShellSort,
-        QuickSort
+        QuickSort,
+        MergeSort
     }
 
     public class SortFactory
@@ -26,6 +27,8 @@ namespace SortingCore.Services.Sortables
                     return new ShellSort();
                 case Algorithm.QuickSort:
                     return new QuickSort();
+                case Algorithm.MergeSort:
+                    return new MergeSort();
             }
             return null;
         }

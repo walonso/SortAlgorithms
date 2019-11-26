@@ -32,8 +32,13 @@ connection.on("ReceiveProgressAscSortShell", function (time, value) {
 });
 
 connection.on("ReceiveProgressAscSortQuick", function (time, value) {
-    console.log('receive..', time, value)
+    //console.log('receive..', time, value)
     addQuickItem(time, value);
+});
+
+connection.on("ReceiveProgressAscSortMerge", function (time, value) {
+    console.log('receive..', time, value)
+    addMergeItem(time, value);
 });
 
 connection.start().then(function () {

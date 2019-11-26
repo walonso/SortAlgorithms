@@ -15,6 +15,8 @@ namespace WebSortAlgorithms
 
         Task ReceiveProgressAscSortShell(long time, int value);
 
-        Task ReceiveProgressAscSortQuick(long time, int value);        
+        Task ReceiveProgressAscSortQuick(long time, int value);
+
+        Task ReceiveProgressAscSortMerge(long time, int value);        
     }
 }

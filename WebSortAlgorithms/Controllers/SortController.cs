@@ -100,6 +100,22 @@ namespace WebSortAlgorithms.Controllers
             await Sort(sortable, generatorItems, amount, p, cts);
         }
 
+        [Route("RunMergeSortAscending/{amount}")]
+        public async Task RunMergeSortAscending(int amount)
+        {
+            SortFactory factory = new SortFactory();
+            ISortable sortable = factory.GetSortable(Algorithm.MergeSort);
+            IGeneratorItems generatorItems = new AscendingGenerator();
+            CancellationTokenSource cts = new CancellationTokenSource();
+
+            var p = new Progress<SortingCore.Services.TimeWatchSortable.TimeAndValue>(async m =>
+            {
+                await _hubContext.Clients.All.ReceiveProgressAscSortMerge(m.time, m.value);
+            });
+
+            await Sort(sortable, generatorItems, amount, p, cts);
+        }
+
         private async Task Sort(ISortable sortable, IGeneratorItems generatorItems, int amount, IProgress<SortingCore.Services.TimeWatchSortable.TimeAndValue> p, CancellationTokenSource cts)
         {
             SortingCore.Services.TimeWatchSortable timeWatchSortable = new SortingCore.Services.TimeWatchSortable();
