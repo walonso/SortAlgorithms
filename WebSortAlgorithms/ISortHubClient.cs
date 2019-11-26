@@ -14,5 +14,7 @@ namespace WebSortAlgorithms
         Task ReceiveProgressAscSortInsertion(long time, int value);
 
         Task ReceiveProgressAscSortShell(long time, int value);
+
+        Task ReceiveProgressAscSortQuick(long time, int value);        
     }
 }

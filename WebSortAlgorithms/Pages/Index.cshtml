@@ -20,6 +20,12 @@
 <span>Quantity items:</span>
 <input style="display:block" id="idAmount" />
 
+TO IMPROVE:
+Back send the progress of the list (meanwhile it is being ordered, back will handle the time to send progress)
+Front will take the list and will graph it using (barras).
+
+The idea is to see the progress of ordering.
+
 <div style="float:left; width:33%">
     @await Html.PartialAsync("SortViews/_PartialBubbleSort.cshtml")
     <!--<prtial name="SortViews/_PartialBubbleSort.cshtml" />-->
@@ -33,6 +39,10 @@
 <div style="float: left;width:33%">
     @await Html.PartialAsync("SortViews/_PartialShellSort.cshtml")
 </div>
+<div style="float: left;width:33%">
+    @await Html.PartialAsync("SortViews/_PartialQuickSort.cshtml")
+</div>
+
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/Client.js"></script>

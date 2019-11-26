@@ -28,7 +28,7 @@ namespace SortAlgorithms
             ISortable sortableSelection = factory.GetSortable(Algorithm.SelectionSort);
             ISortable sortableInsertion = factory.GetSortable(Algorithm.InsertionSort);
             ISortable sortableShell = factory.GetSortable(Algorithm.ShellSort);
-
+            ISortable sortableQuick = factory.GetSortable(Algorithm.QuickSort);
 
             IGeneratorItems generatorItems = new AscendingGenerator();
 
@@ -41,10 +41,11 @@ namespace SortAlgorithms
             fileService.Delete(path);
             foreach (int iteration in iterations)
             {
-                Sort(sortable, generatorItems, iteration, fileService);
-                Sort(sortableSelection, generatorItems, iteration, fileService);
-                Sort(sortableInsertion, generatorItems, iteration, fileService);
-                Sort(sortableShell, generatorItems, iteration, fileService);
+                //Sort(sortable, generatorItems, iteration, fileService);
+                //Sort(sortableSelection, generatorItems, iteration, fileService);
+                //Sort(sortableInsertion, generatorItems, iteration, fileService);
+                //Sort(sortableShell, generatorItems, iteration, fileService);
+                Sort(sortableQuick, generatorItems, iteration, fileService);
             }
             
             Console.ReadKey();
@@ -72,7 +73,7 @@ namespace SortAlgorithms
         {
             fileService.Save(path, sortable.ToString());
 
-            Console.WriteLine("---- Analyze "+amount+" ----");
+            Console.WriteLine("---- Analyze "+amount+" ----"+sortable.ToString());
             TimeWatch timer = new TimeWatch();
             timer.Start();
             List<int> list = generatorItems.GetData(amount);

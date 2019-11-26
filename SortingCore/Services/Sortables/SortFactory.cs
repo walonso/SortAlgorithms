@@ -6,7 +6,8 @@ namespace SortingCore.Services.Sortables
         BubbleSort,
         SelectionSort,
         InsertionSort,
-        ShellSort
+        ShellSort,
+        QuickSort
     }
 
     public class SortFactory
@@ -23,6 +24,8 @@ namespace SortingCore.Services.Sortables
                     return new InsertionSort();
                 case Algorithm.ShellSort:
                     return new ShellSort();
+                case Algorithm.QuickSort:
+                    return new QuickSort();
             }
             return null;
         }

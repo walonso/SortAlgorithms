@@ -27,8 +27,13 @@ connection.on("ReceiveProgressAscSortInsertion", function (time, value) {
 });
 
 connection.on("ReceiveProgressAscSortShell", function (time, value) {
-    console.log('receive..', time, value)
+//    console.log('receive..', time, value)
     addShellItem(time, value);
+});
+
+connection.on("ReceiveProgressAscSortQuick", function (time, value) {
+    console.log('receive..', time, value)
+    addQuickItem(time, value);
 });
 
 connection.start().then(function () {
