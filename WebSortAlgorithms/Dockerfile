@@ -9,7 +9,7 @@ WORKDIR /WebSortAlgorithms
 # so, this commands means: move all current files to curret created folder.
 COPY . ./
 # compile and publish project.
-RUN dotnet publish WebSortAlgorithms -c Release -o out
+RUN dotnet publish /WebSortAlgorithms -c Release -o out
 
 # getting the image production nt core 3. (previous image is for compile)
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0
