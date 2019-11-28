@@ -9,7 +9,7 @@ https://github.com/dotnet/dotnet-docker/tree/master/samples/aspnetapp
 
 
 
-HOW to deploy to LOCAL DOCKER
+1.  HOW to deploy to LOCAL DOCKER
 (explanation Dockerfile: https://www.softwaredeveloper.blog/multi-project-dotnet-core-solution-in-docker-image)
 Related files: .dockerignore and dockerfile.
 
@@ -72,8 +72,16 @@ https://localbyflywheel.com/community/t/windows-help-im-getting-a-bios-error-abo
 
 
 
-DEPLOY HEROKU:
+2. DEPLOY HEROKU:
 https://codingblast.com/hosting-asp-net-core-on-heroku-with-dockercircleci-for-free/
+Heroku does not support Net Core application you have to use "buildpacks"
 
-Deploy to CircleCI
+- Create app in Heroku
+- Install Heroku cli
+- run command: "heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack#v3.0.100 --app [Heroku APP name]"
+- On "Seetings" section inside Heroku for this app verifies taht buildpack was added in section "Buildpacks"
+- Launch a manual deploy (section "Deploy")
+- url: https://sort-algorithms.herokuapp.com/
+
+3. Deploy to CircleCI
 Related files: folder .circleci and config.yml
