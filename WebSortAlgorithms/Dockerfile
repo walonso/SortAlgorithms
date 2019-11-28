@@ -1,9 +1,9 @@
 ﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
-WORKDIR /app
+WORKDIR ../WebSortAlgorithms
 
 # copy csproj and restore as distinct layers
-COPY *.sln .
-COPY aspnetapp/*.csproj ./aspnetapp/
+COPY ../*.sln .
+COPY ../WebSortAlgorithms/*.csproj ./WebSortAlgorithms/
 RUN dotnet restore
 
 # copy everything else and build app
