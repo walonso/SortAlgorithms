@@ -73,6 +73,7 @@ https://localbyflywheel.com/community/t/windows-help-im-getting-a-bios-error-abo
 2. DEPLOY HEROKU:
 https://codingblast.com/hosting-asp-net-core-on-heroku-with-dockercircleci-for-free/
 Heroku does not support Net Core application you have to use "buildpacks"
+Added heroku.yml file
 
 - Create app in Heroku
 - Install Heroku cli
