@@ -73,7 +73,6 @@ https://localbyflywheel.com/community/t/windows-help-im-getting-a-bios-error-abo
 2. DEPLOY HEROKU:
 https://codingblast.com/hosting-asp-net-core-on-heroku-with-dockercircleci-for-free/
 Heroku does not support Net Core application you have to use "buildpacks"
-Added heroku.yml file
 
 - Create app in Heroku
 - Install Heroku cli
@@ -81,6 +80,8 @@ Added heroku.yml file
 - On "Seetings" section inside Heroku for this app verifies taht buildpack was added in section "Buildpacks"
 - Launch a manual deploy (section "Deploy")
 - url: https://sort-algorithms.herokuapp.com/
+If error after build on Heroku, use this command: (If error is to add heroku.yml or set stak (I set stack) )
+>heroku stack:set heroku-18 --app sort-algorithms
 
 3. Deploy to CircleCI
 Related files: folder .circleci and config.yml
