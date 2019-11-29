@@ -85,3 +85,11 @@ If error after build on Heroku, use this command: (If error is to add heroku.yml
 
 3. Deploy to CircleCI
 Related files: folder .circleci and config.yml
+
+
+
+Order:
+1. do changes in code
+2. push to Git hub repository
+3. Circle CI will build the project.
+4. after succesful build, heroku will do a build and deploy.
